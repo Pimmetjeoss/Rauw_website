@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
+/* Custom font - SupremeLL-Bold */
+@font-face {
+  font-family: 'SupremeLL-Bold';
+  src: local('SupremeLL-Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {

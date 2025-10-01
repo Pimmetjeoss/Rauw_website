@@ -1,103 +1,133 @@
 import Image from "next/image";
+import TypewriterTitle from "@/components/TypewriterTitle";
+import { Navbar } from "@/components/Navbar";
+import ScrollText from "@/components/ScrollText";
+import { PixelImage } from "@/components/PixelImage";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="font-sans bg-black">
+      <Navbar
+        navigationLinks={[
+          { href: '#', label: 'Home', active: true },
+          { href: '#over', label: 'Over' },
+          { href: '#contact', label: 'Contact' },
+        ]}
+        signInText="Login"
+        ctaText="Start"
+      />
+      {/* Container voor sticky sectie - beperkt tot 0.15x viewport */}
+      <div className="relative h-[150vh]">
+        {/* Scrolling text - verdwijnt naar boven */}
+        <div className="absolute top-0 left-0 right-0 flex justify-center z-20 pt-1">
+          <TypewriterTitle
+            sequences={[
+              { text: "Rauw", deleteAfter: true },
+              { text: "Collectief", deleteAfter: true },
+              { text: "Rauw", deleteAfter: false },
+            ]}
+            typingSpeed={80}
+            startDelay={300}
+            autoLoop={false}
+            loopDelay={2000}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        {/* Sticky image - blijft staan binnen deze container */}
+        <div className="sticky top-0 w-full flex flex-col justify-center items-center min-h-screen z-10">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/fd20b279-c191-4d15-b018-e54e2bebc8fb.jpg"
+            alt="Header image"
+            width={1200}
+            height={2000}
+            priority
+            className="w-auto max-w-[60vw] object-cover"
+            style={{ height: '100vh' }}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <div className="w-full h-[1px] bg-white mt-4 opacity-80"></div>
+        </div>
+      </div>
+
+      {/* Content na de afbeelding */}
+      <div className="relative min-h-screen bg-black z-30">
+        <div className="absolute top-0 left-0">
+          <ScrollText
+            texts={[
+              "What's on:",
+              "Bestsellers..."
+            ]}
+            className="max-w-none"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+        </div>
+        <div className="absolute top-[200px] left-1/2 -translate-x-1/2 flex gap-12">
+          <PixelImage src="/bestseller1.jpg" grid="4x6" />
+          <PixelImage src="/bestseller2.jpg" grid="4x6" />
+          <PixelImage src="/bestseller3.jpg" grid="4x6" />
+        </div>
+        {/* 4 afbeeldingen, waarbij de 3 rechtse gecentreerd zijn onder de eerste rij */}
+        <div className="absolute top-[500px] left-1/2 -translate-x-1/2 flex gap-12 -ml-8">
+          <div className="-ml-[calc(12rem+3rem)]">
+            <PixelImage src="/bestseller4.jpg" grid="4x6" />
+          </div>
+          <PixelImage src="/bestseller5.jpg" grid="4x6" />
+          <PixelImage src="/bestseller6.jpg" grid="4x6" />
+          <PixelImage src="/bestseller7.jpg" grid="4x6" />
+        </div>
+        {/* Witte streep onder bestsellers */}
+        <div className="absolute top-[1050px] w-full h-[1px] bg-white opacity-80"></div>
+
+        {/* Over Rauw Collectief sectie */}
+        <div className="absolute top-[1070px] left-0 w-full flex justify-between items-start">
+          <div>
+            <ScrollText
+              texts={[
+                "Over",
+                "Rauw Collectief"
+              ]}
+              className="max-w-none"
+            />
+            <div className="text-white text-lg -mt-16 max-w-xl leading-relaxed">
+              <p>We make beautifully functional furniture.<br />
+              Every design we release is the result of a<br />
+              thorough and iterative process, culminating<br />
+              in timeless pieces that can be enjoyed across<br />
+              generations.</p>
+              <a href="#" className="inline-block mt-6 text-white underline hover:text-white/80 transition-colors">
+                Learn more →
+              </a>
+            </div>
+          </div>
+          <video
+            src="/rauw_opname.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-auto h-[850px] object-cover rounded-lg relative top-12 -left-32"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+
+        {/* Witte streep onder video - start nieuwe sectie */}
+        <div className="absolute top-[2300px] w-full h-[1px] bg-white opacity-80"></div>
+
+        {/* Footer */}
+        <footer className="absolute top-[2350px] w-full py-12 px-8">
+          <div className="container mx-auto flex justify-between items-start">
+            <div className="text-white">
+              <p className="text-sm opacity-80">© 2025 Rauw Collectief. All rights reserved.</p>
+            </div>
+            <div>
+              <Image
+                src="/Rauw_logo.jpg"
+                alt="Rauw Collectief"
+                width={180}
+                height={90}
+                className="h-16 w-auto"
+              />
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
