@@ -312,15 +312,18 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                     <div>
                                       <ul className="space-y-0 group" style={{ fontFamily: 'SupremeLL-Bold, sans-serif', fontSize: '2rem', fontWeight: 700, lineHeight: 1.2 }}>
                                         <li>
-                                          <a
-                                            href="#"
+                                          <button
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              router.push('/over-ons');
+                                            }}
                                             className={cn(
-                                              "transition-opacity duration-200 hover:underline",
+                                              "transition-opacity duration-200 hover:underline cursor-pointer",
                                               isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             Over ons
-                                          </a>
+                                          </button>
                                         </li>
                                         <li>
                                           <a

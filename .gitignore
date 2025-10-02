@@ -42,10 +42,17 @@ next-env.d.ts
 
 # claude
 .claude/
-Claude.md
+CLAUDE.md
 
 # playwright
 .playwright-mcp/
 
 # temp files
 nul
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db

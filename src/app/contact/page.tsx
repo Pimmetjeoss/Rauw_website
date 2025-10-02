@@ -5,8 +5,11 @@ import { Navbar } from './components/navbarblack';
 import PageTransition from '@/components/PageTransition';
 import { Footer } from '@/components/Footer';
 import SideMenu from '@/components/SideMenu';
+import { useRouter } from 'next/navigation';
 
 export default function ContactPage() {
+  const router = useRouter();
+
   return (
     <PageTransition>
       <div className="bg-black relative min-h-screen">
@@ -26,7 +29,7 @@ export default function ContactPage() {
               {/* Links - Menu items */}
               <SideMenu
                 items={[
-                  { label: "Over ons" },
+                  { label: "Over ons", onClick: () => router.push('/over-ons') },
                   { label: "Tafel ontwerpen" },
                   { label: "Review" },
                   { label: "Contact", active: true },

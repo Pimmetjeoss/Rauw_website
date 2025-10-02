@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rauw Collectief Website
 
-## Getting Started
+Een moderne Next.js website voor Rauw Collectief - handgemaakte meubels en tafels.
 
-First, run the development server:
+## 🚀 Features
+
+- **Homepage** met typewriter effect en pixelated afbeeldingen
+- **Over Ons** pagina met teamleden en bedrijfsinformatie
+- **Tafels** pagina met productoverzicht
+- **FAQ** pagina met veelgestelde vragen
+- **Contact** pagina met formulier en openingstijden
+- Responsive navbar met mega-menu
+- Smooth page transitions
+- Custom componenten (TypewriterTitle, PixelImage, ScrollText)
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Styling:** Tailwind CSS
+- **UI Components:** Radix UI
+- **Fonts:** Custom fonts (SupremeLL)
+- **Animaties:** Framer Motion
+
+## 📦 Getting Started
+
+Installeer dependencies:
+
+```bash
+npm install
+```
+
+Start de development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in je browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structuur
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── contact/          # Contact pagina
+│   ├── faq/              # FAQ pagina
+│   ├── over-ons/         # Over Ons pagina
+│   ├── tafels/           # Tafels pagina
+│   └── page.tsx          # Homepage
+├── components/
+│   ├── ui/               # Basis UI componenten
+│   ├── Navbar.tsx        # Hoofdnavigatie
+│   ├── Footer.tsx        # Footer component
+│   ├── SideMenu.tsx      # Sidebar menu
+│   └── ...               # Andere custom componenten
+└── lib/
+    └── utils.ts          # Utility functies
+```
 
-## Learn More
+## 🎨 Belangrijke Componenten
 
-To learn more about Next.js, take a look at the following resources:
+- **Navbar** - Sticky navigatiebalk met dropdown mega-menu
+- **TypewriterTitle** - Animated typewriter effect
+- **PixelImage** - Afbeeldingen met pixelated hover effect
+- **ScrollText** - Grote scrollende tekst animatie
+- **PageTransition** - Smooth page transitions tussen routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔗 Navigatie Links
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Alle "Over ons" links in de website leiden naar `/over-ons`:
+- Navbar → Leren → Over ons
+- Homepage → Learn more →
+- Contact pagina → SideMenu → Over ons
 
-## Deploy on Vercel
+## 📝 Recent Updates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ✅ Over ons pagina toegevoegd met teamleden
+- ✅ Alle "Over ons" links gekoppeld aan `/over-ons`
+- ✅ Navigation verbeteringen in alle navbar componenten
+- ✅ Contact pagina SideMenu gelinkt
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚢 Deployment
+
+Deploy eenvoudig op [Vercel](https://vercel.com):
+
+```bash
+vercel --prod
+```
+
+Of gebruik de Vercel GitHub integratie voor automatische deployments.
+
+## 📄 License
+
+© 2025 Rauw Collectief. All rights reserved.

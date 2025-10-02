@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import ScrollText from "@/components/ScrollText";
 import { PixelImage } from "@/components/PixelImage";
 import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -93,9 +94,9 @@ export default function Home() {
               thorough and iterative process, culminating<br />
               in timeless pieces that can be enjoyed across<br />
               generations.</p>
-              <a href="#" className="inline-block mt-6 text-white underline hover:text-white/80 transition-colors">
+              <Link href="/over-ons" className="inline-block mt-6 text-white underline hover:text-white/80 transition-colors">
                 Learn more →
-              </a>
+              </Link>
             </div>
           </div>
           <video
