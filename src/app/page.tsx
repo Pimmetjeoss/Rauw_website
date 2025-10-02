@@ -3,21 +3,22 @@ import TypewriterTitle from "@/components/TypewriterTitle";
 import { Navbar } from "@/components/Navbar";
 import ScrollText from "@/components/ScrollText";
 import { PixelImage } from "@/components/PixelImage";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="font-sans bg-black">
       <Navbar
         navigationLinks={[
-          { href: '#', label: 'Home', active: true },
-          { href: '#over', label: 'Over' },
+          { href: '#', label: 'Producten', active: true },
+          { href: '#leren', label: 'Leren' },
           { href: '#contact', label: 'Contact' },
         ]}
         signInText="Login"
         ctaText="Start"
       />
       {/* Container voor sticky sectie - beperkt tot 0.15x viewport */}
-      <div className="relative h-[150vh]">
+      <div className="relative h-[150vh] bg-black">
         {/* Scrolling text - verdwijnt naar boven */}
         <div className="absolute top-0 left-0 right-0 flex justify-center z-20 pt-1">
           <TypewriterTitle
@@ -41,7 +42,7 @@ export default function Home() {
             width={1200}
             height={2000}
             priority
-            className="w-auto max-w-[60vw] object-cover"
+            className="w-auto max-w-[60vw] object-cover opacity-0 animate-[fadeIn_1.5s_ease-in-out_3s_forwards]"
             style={{ height: '100vh' }}
           />
           <div className="w-full h-[1px] bg-white mt-4 opacity-80"></div>
@@ -49,7 +50,7 @@ export default function Home() {
       </div>
 
       {/* Content na de afbeelding */}
-      <div className="relative min-h-screen bg-black z-30">
+      <div className="relative bg-black z-30 pb-32" style={{ minHeight: '2500px' }}>
         <div className="absolute top-0 left-0">
           <ScrollText
             texts={[
@@ -77,7 +78,7 @@ export default function Home() {
         <div className="absolute top-[1050px] w-full h-[1px] bg-white opacity-80"></div>
 
         {/* Over Rauw Collectief sectie */}
-        <div className="absolute top-[1070px] left-0 w-full flex justify-between items-start">
+        <div className="absolute top-[1070px] left-0 w-full flex justify-between items-start bg-black px-8">
           <div>
             <ScrollText
               texts={[
@@ -86,7 +87,7 @@ export default function Home() {
               ]}
               className="max-w-none"
             />
-            <div className="text-white text-lg -mt-16 max-w-xl leading-relaxed">
+            <div className="text-white text-lg -mt-16 max-w-xl leading-relaxed bg-black">
               <p>We make beautifully functional furniture.<br />
               Every design we release is the result of a<br />
               thorough and iterative process, culminating<br />
@@ -110,13 +111,40 @@ export default function Home() {
         {/* Witte streep onder video - start nieuwe sectie */}
         <div className="absolute top-[2300px] w-full h-[1px] bg-white opacity-80"></div>
 
+        {/* Ontwerp sectie met links "Ontwerp je eigen tafel" en rechts "Submit" */}
+        <div className="absolute top-[2220px] w-full flex justify-between items-end">
+          <div className="pl-4">
+            <ScrollText
+              texts={["Ontwerp je eigen tafel"]}
+              className="max-w-none"
+            />
+          </div>
+          <div className="pr-4">
+            <ScrollText
+              texts={["Submit"]}
+              className="max-w-none [&_div]:text-gray-400"
+            />
+          </div>
+        </div>
+
         {/* Footer */}
-        <footer className="absolute top-[2350px] w-full py-12 px-8">
-          <div className="container mx-auto flex justify-between items-start">
-            <div className="text-white">
+        <footer className="absolute top-[2420px] w-full py-2 bg-black">
+          <div className="flex justify-between items-end">
+            <div className="text-white pl-8 flex flex-col gap-2">
+              <div className="flex gap-3">
+                <a href="https://www.linkedin.com/in/rick-de-voogt-29413728/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                  <Linkedin className="h-6 w-6 text-white" />
+                </a>
+                <a href="https://www.facebook.com/RauwCollectief/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                  <Facebook className="h-6 w-6 text-white" />
+                </a>
+                <a href="https://www.instagram.com/rauwcollectief/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                  <Instagram className="h-6 w-6 text-white" />
+                </a>
+              </div>
               <p className="text-sm opacity-80">© 2025 Rauw Collectief. All rights reserved.</p>
             </div>
-            <div>
+            <div className="pr-2">
               <Image
                 src="/Rauw_logo.jpg"
                 alt="Rauw Collectief"

@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import SlicedText from '@/components/SlicedText';
 
 const Logo = (props: React.SVGAttributes<SVGElement>) => {
   return (
@@ -88,10 +89,9 @@ export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const defaultNavigationLinks: NavLink[] = [
-  { href: '#', label: 'Home', active: true },
-  { href: '#features', label: 'Features' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#about', label: 'About' },
+  { href: '#', label: 'Producten', active: true },
+  { href: '#leren', label: 'Leren' },
+  { href: '#contact', label: 'Contact' },
 ];
 
 export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
@@ -113,8 +113,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
   ) => {
     const [isMobile, setIsMobile] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    const [isLogoHovered, setIsLogoHovered] = useState(false);
+    const [isNavbarHovered, setIsNavbarHovered] = useState(false);
     const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+    const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const containerRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -158,9 +159,12 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     return (
       <header
         ref={combinedRef}
+        onMouseEnter={() => setIsNavbarHovered(true)}
+        onMouseLeave={() => setIsNavbarHovered(false)}
         className={cn(
-          'sticky z-[100] w-full px-4 md:px-6 transition-all duration-300',
-          isVisible ? 'top-0 bg-black/95 backdrop-blur border-b border-white/80' : 'top-16',
+          'sticky top-0 z-[100] w-full px-4 md:px-6 transition-all duration-300',
+          isVisible ? 'backdrop-blur border-b' : '',
+          isVisible && isNavbarHovered ? 'bg-white border-black' : isVisible ? 'bg-black border-white/80' : '',
           className
         )}
         {...props}
@@ -169,15 +173,13 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
           {/* Logo helemaal links */}
           <button
             onClick={(e) => e.preventDefault()}
-            onMouseEnter={() => setIsLogoHovered(true)}
-            onMouseLeave={() => setIsLogoHovered(false)}
             className={cn(
-              "flex items-center transition-all duration-300 cursor-pointer",
+              "flex items-center transition-all duration-700 cursor-pointer",
               isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
             )}
           >
             <Image
-              src={isLogoHovered ? "/Rauw_logo_witzwart.png" : "/Rauw_logo.jpg"}
+              src={isNavbarHovered ? "/Rauw_logo_witzwart.png" : "/Rauw_logo.jpg"}
               alt="Rauw Collectief"
               width={180}
               height={90}
@@ -223,83 +225,266 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
             )}
             <div className="flex items-center gap-6">
               {!isMobile && (
-                <div className="flex gap-0">
+                <div className={cn(
+                  "flex gap-0 transition-all duration-700",
+                  isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                )}>
                   {navigationLinks.map((link, index) => (
                     <div key={index} className="relative">
-                      <button
-                        onClick={() => setOpenMenuIndex(openMenuIndex === index ? null : index)}
-                        className={cn(
-                          "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black cursor-pointer bg-transparent",
-                          link.active
-                            ? "text-white"
-                            : "text-white/80 hover:text-black"
-                        )}
-                      >
-                        {link.label}
-                        <svg
+                      {link.label === 'Contact' ? (
+                        // Contact is een directe link
+                        <a
+                          href={link.href}
                           className={cn(
-                            "ml-1 h-3 w-3 transition-transform duration-300",
-                            openMenuIndex === index ? "rotate-180" : ""
+                            "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
+                            isNavbarHovered
+                              ? "text-black hover:text-black/70"
+                              : "text-white/80 hover:bg-white hover:text-black",
+                            link.active && !isNavbarHovered && "text-white"
                           )}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
-                      {openMenuIndex === index && (
+                          {link.label}
+                        </a>
+                      ) : (
+                        // Andere items hebben een dropdown menu
+                        <>
+                          <button
+                            onClick={() => setOpenMenuIndex(openMenuIndex === index ? null : index)}
+                            className={cn(
+                              "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
+                              isNavbarHovered
+                                ? "text-black hover:text-black/70"
+                                : "text-white/80 hover:bg-white hover:text-black",
+                              link.active && !isNavbarHovered && "text-white"
+                            )}
+                          >
+                            {link.label}
+                            <svg
+                              className={cn(
+                                "ml-1 h-3 w-3 transition-transform duration-300",
+                                openMenuIndex === index ? "rotate-180" : ""
+                              )}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                        </>
+                      )}
+                      {link.label !== 'Contact' && openMenuIndex === index && (
                         <>
                           {/* Overlay */}
                           <div
                             className="fixed inset-0 z-40"
                             onClick={() => setOpenMenuIndex(null)}
                           />
-                          {/* Mega Menu */}
-                          <div className="absolute top-full right-0 mt-2 bg-white text-black shadow-xl p-8 min-w-[800px] rounded-md border z-50">
-                            <div className="grid grid-cols-4 gap-8">
-                              <div>
-                                <h3 className="font-semibold mb-4 text-base">Audio & Vinyl</h3>
-                                <ul className="space-y-2 text-sm">
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Turntables</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Speakers</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Amplifiers</a></li>
-                                </ul>
-                              </div>
-                              <div>
-                                <h3 className="font-semibold mb-4 text-base">Living Room</h3>
-                                <ul className="space-y-2 text-sm">
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Sofas</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Tables</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Chairs</a></li>
-                                </ul>
-                              </div>
-                              <div>
-                                <h3 className="font-semibold mb-4 text-base">Workspace</h3>
-                                <ul className="space-y-2 text-sm">
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Desks</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Office Chairs</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Storage</a></li>
-                                </ul>
-                              </div>
-                              <div>
-                                <h3 className="font-semibold mb-4 text-base">USM</h3>
-                                <ul className="space-y-2 text-sm">
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Haller System</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Modular Furniture</a></li>
-                                  <li><a href="#" className="hover:underline text-black/70 hover:text-black">Custom Solutions</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div className="mt-8 pt-6 border-t border-black/10 flex gap-8">
-                              <div>
-                                <h4 className="text-sm font-semibold mb-2">Need help?</h4>
-                                <a href="#" className="text-sm text-black/70 hover:text-black underline">Reach Out!</a>
-                              </div>
-                              <div>
-                                <h4 className="text-sm font-semibold mb-2">Clearance & Ready-to-Ship</h4>
-                                <a href="#" className="text-sm text-black/70 hover:text-black">Custom Inquiries</a>
-                              </div>
+                          {/* Mega Menu - Full Width */}
+                          <div
+                            className={cn(
+                              "fixed left-0 right-0 top-[64px] shadow-xl z-50 border-t",
+                              isNavbarHovered ? "bg-white text-black border-black" : "bg-black text-white border-white/80"
+                            )}
+                            style={{
+                              width: '100vw',
+                              animation: 'slideDown 0.3s ease-out forwards'
+                            }}
+                          >
+                            <div className="relative p-8">
+                              {link.label === 'Leren' ? (
+                                // Leren menu - zonder submenu
+                                <>
+                                  {/* Verticale lijn */}
+                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-black" : "bg-white")} />
+
+                                  {/* Links van de streep */}
+                                  <div className="absolute left-8 bottom-8">
+                                    <h4 className="text-sm font-semibold mb-2">Over Rauw Collectief</h4>
+                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Ons verhaal</a>
+                                  </div>
+
+                                  {/* Rechts van de streep - zonder hover submenu */}
+                                  <div className="pl-[22%] flex gap-8">
+                                    <div>
+                                      <ul className="space-y-0 group" style={{ fontFamily: 'SupremeLL-Bold, sans-serif', fontSize: '2rem', fontWeight: 700, lineHeight: 1.2 }}>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200 hover:underline",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                          >
+                                            Over ons
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200 hover:underline",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                          >
+                                            Tafel ontwerpen
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200 hover:underline",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                          >
+                                            Review
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200 hover:underline",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                          >
+                                            FAQ
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                // Producten en Contact menu
+                                <>
+                                  {/* Verticale lijn */}
+                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-black" : "bg-white")} />
+
+                                  {/* Links van de streep */}
+                                  <div className="absolute left-8 bottom-8">
+                                    <h4 className="text-sm font-semibold mb-2">Clearance & Ready-to-Ship</h4>
+                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Custom Inquiries</a>
+                                  </div>
+
+                                  {/* Rechts van de streep */}
+                                  <div
+                                    className="pl-[22%] flex gap-8"
+                                    onMouseLeave={() => setHoveredItem(null)}
+                                  >
+                                    <div>
+                                      <ul className="space-y-0 group" style={{ fontFamily: 'SupremeLL-Bold, sans-serif', fontSize: '2rem', fontWeight: 700, lineHeight: 1.2 }}>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200",
+                                              hoveredItem === 'Bladen' && "underline",
+                                              hoveredItem && hoveredItem !== 'Bladen' ? "opacity-30" : "",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                            onMouseEnter={() => setHoveredItem('Bladen')}
+                                          >
+                                            Bladen
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200",
+                                              hoveredItem === 'Onderstel' && "underline",
+                                              hoveredItem && hoveredItem !== 'Onderstel' ? "opacity-30" : "",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                            onMouseEnter={() => setHoveredItem('Onderstel')}
+                                          >
+                                            Onderstel
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200",
+                                              hoveredItem === 'Meubels' && "underline",
+                                              hoveredItem && hoveredItem !== 'Meubels' ? "opacity-30" : "",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                            onMouseEnter={() => setHoveredItem('Meubels')}
+                                          >
+                                            Meubels
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            href="#"
+                                            className={cn(
+                                              "transition-opacity duration-200",
+                                              hoveredItem === 'Diversen' && "underline",
+                                              hoveredItem && hoveredItem !== 'Diversen' ? "opacity-30" : "",
+                                              isNavbarHovered ? "text-black" : "text-white"
+                                            )}
+                                            onMouseEnter={() => setHoveredItem('Diversen')}
+                                          >
+                                            Diversen
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+
+                                    {/* Verticale streep en submenu */}
+                                    {hoveredItem && (
+                                      <div className="flex gap-8 pl-8">
+                                        <div className={cn("w-[1px] h-full", isNavbarHovered ? "bg-black" : "bg-white")} />
+                                        <div>
+                                          {hoveredItem === 'Bladen' && (
+                                            <>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Onze bladen</h3>
+                                              <ul className="space-y-2 text-sm">
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Eiken bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Notenhouten bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Betonnen bladen</a></li>
+                                              </ul>
+                                            </>
+                                          )}
+                                          {hoveredItem === 'Onderstel' && (
+                                            <>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Toffe onderstellen</h3>
+                                              <ul className="space-y-2 text-sm">
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stalen onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Houten onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Custom onderstel</a></li>
+                                              </ul>
+                                            </>
+                                          )}
+                                          {hoveredItem === 'Meubels' && (
+                                            <>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Kekke meubels</h3>
+                                              <ul className="space-y-2 text-sm">
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Tafels</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Kasten</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stoelen</a></li>
+                                              </ul>
+                                            </>
+                                          )}
+                                          {hoveredItem === 'Diversen' && (
+                                            <>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Diverse Diversen</h3>
+                                              <ul className="space-y-2 text-sm">
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Accessoires</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Verlichting</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Decoratie</a></li>
+                                              </ul>
+                                            </>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
                         </>
@@ -311,13 +496,18 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
             </div>
           </div>
           <div className={cn(
-            "flex items-center gap-3 transition-all duration-300",
+            "flex items-center gap-3 transition-all duration-700",
             isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
           )}>
             <Button
               variant="ghost"
               size="sm"
-              className="text-sm font-medium hover:bg-white/10 text-white"
+              className={cn(
+                "text-sm font-medium transition-colors",
+                isNavbarHovered
+                  ? "text-black hover:bg-black/10"
+                  : "text-white hover:bg-white/10"
+              )}
               onClick={(e) => {
                 e.preventDefault();
                 if (onSignInClick) onSignInClick();
@@ -327,7 +517,12 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
             </Button>
             <Button
               size="sm"
-              className="text-sm font-medium px-4 h-9 rounded-md shadow-sm"
+              className={cn(
+                "text-sm font-medium px-4 h-9 rounded-md shadow-sm transition-colors",
+                isNavbarHovered
+                  ? "bg-black text-white hover:bg-black/90"
+                  : "bg-white text-black hover:bg-white/90"
+              )}
               onClick={(e) => {
                 e.preventDefault();
                 if (onCtaClick) onCtaClick();
