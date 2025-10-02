@@ -140,13 +140,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     }, []);
 
     useEffect(() => {
-      const handleScroll = () => {
-        // Navbar wordt zichtbaar na 200px scrollen
-        setIsVisible(window.scrollY > 200);
-      };
-
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+      // Navbar is altijd zichtbaar op FAQ pagina
+      setIsVisible(true);
     }, []);
 
     const combinedRef = React.useCallback((node: HTMLElement | null) => {
@@ -165,8 +160,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
         onMouseLeave={() => setIsNavbarHovered(false)}
         className={cn(
           'sticky top-0 z-[100] w-full px-4 md:px-6 transition-all duration-300',
-          isVisible ? 'backdrop-blur border-b' : '',
-          isVisible && isNavbarHovered ? 'bg-white border-black' : isVisible ? 'bg-black border-white/80' : '',
+          'backdrop-blur border-b',
+          isNavbarHovered ? 'bg-white border-white' : 'bg-black border-white',
           className
         )}
         {...props}
@@ -238,11 +233,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                     <div key={index} className="relative">
                       {link.label === 'Contact' ? (
                         // Contact is een directe link
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            router.push('/contact');
-                          }}
+                        <a
+                          href={link.href}
                           className={cn(
                             "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
                             isNavbarHovered
@@ -252,7 +244,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                           )}
                         >
                           {link.label}
-                        </button>
+                        </a>
                       ) : (
                         // Andere items hebben een dropdown menu
                         <>
@@ -454,9 +446,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", "text-black")}>Onze bladen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Eiken bladen</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Notenhouten bladen</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Betonnen bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Eiken bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Notenhouten bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Betonnen bladen</a></li>
                                               </ul>
                                             </>
                                           )}
@@ -464,15 +456,15 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", "text-black")}>Toffe onderstellen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stalen onderstel</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Houten onderstel</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Custom onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Stalen onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Houten onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Custom onderstel</a></li>
                                               </ul>
                                             </>
                                           )}
                                           {hoveredItem === 'Meubels' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Kekke meubels</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", "text-black")}>Kekke meubels</h3>
                                               <ul className="space-y-2 text-sm">
                                                 <li>
                                                   <button
@@ -480,23 +472,23 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                                       e.preventDefault();
                                                       router.push('/tafels');
                                                     }}
-                                                    className={cn("hover:underline cursor-pointer", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}
+                                                    className={cn("hover:underline cursor-pointer", "text-black/70 hover:text-black")}
                                                   >
                                                     Tafels
                                                   </button>
                                                 </li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Kasten</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stoelen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Kasten</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Stoelen</a></li>
                                               </ul>
                                             </>
                                           )}
                                           {hoveredItem === 'Diversen' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Diverse Diversen</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", "text-black")}>Diverse Diversen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Accessoires</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Verlichting</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Decoratie</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Accessoires</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Verlichting</a></li>
+                                                <li><a href="#" className={cn("hover:underline", "text-black/70 hover:text-black")}>Decoratie</a></li>
                                               </ul>
                                             </>
                                           )}

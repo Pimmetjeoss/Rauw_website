@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -117,6 +118,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const containerRef = useRef<HTMLElement>(null);
+    const router = useRouter();
 
     useEffect(() => {
       const checkWidth = () => {
@@ -167,7 +169,10 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
         <div className="container mx-auto flex h-16 max-w-screen-2xl items-center gap-4">
           {/* Logo helemaal links */}
           <button
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/');
+            }}
             className={cn(
               "flex items-center transition-all duration-700 cursor-pointer",
               isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -228,8 +233,11 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                     <div key={index} className="relative">
                       {link.label === 'Contact' ? (
                         // Contact is een directe link
-                        <a
-                          href={link.href}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push('/contact');
+                          }}
                           className={cn(
                             "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
                             isNavbarHovered
@@ -239,7 +247,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                           )}
                         >
                           {link.label}
-                        </a>
+                        </button>
                       ) : (
                         // Andere items hebben een dropdown menu
                         <>
@@ -337,15 +345,18 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                           </a>
                                         </li>
                                         <li>
-                                          <a
-                                            href="#"
+                                          <button
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              router.push('/faq');
+                                            }}
                                             className={cn(
-                                              "transition-opacity duration-200 hover:underline",
+                                              "transition-opacity duration-200 hover:underline cursor-pointer",
                                               isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             FAQ
-                                          </a>
+                                          </button>
                                         </li>
                                       </ul>
                                     </div>
@@ -436,7 +447,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                         <div>
                                           {hoveredItem === 'Bladen' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Onze bladen</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-white" : "text-black")}>Onze bladen</h3>
                                               <ul className="space-y-2 text-sm">
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Eiken bladen</a></li>
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Notenhouten bladen</a></li>
@@ -446,7 +457,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                           )}
                                           {hoveredItem === 'Onderstel' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Toffe onderstellen</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-white" : "text-black")}>Toffe onderstellen</h3>
                                               <ul className="space-y-2 text-sm">
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Stalen onderstel</a></li>
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Houten onderstel</a></li>
@@ -456,9 +467,19 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                           )}
                                           {hoveredItem === 'Meubels' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Kekke meubels</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-white" : "text-black")}>Kekke meubels</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Tafels</a></li>
+                                                <li>
+                                                  <button
+                                                    onClick={(e) => {
+                                                      e.preventDefault();
+                                                      router.push('/tafels');
+                                                    }}
+                                                    className={cn("hover:underline cursor-pointer", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}
+                                                  >
+                                                    Tafels
+                                                  </button>
+                                                </li>
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Kasten</a></li>
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Stoelen</a></li>
                                               </ul>
@@ -466,7 +487,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                           )}
                                           {hoveredItem === 'Diversen' && (
                                             <>
-                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Diverse Diversen</h3>
+                                              <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-white" : "text-black")}>Diverse Diversen</h3>
                                               <ul className="space-y-2 text-sm">
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Accessoires</a></li>
                                                 <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Verlichting</a></li>
