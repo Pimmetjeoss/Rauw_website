@@ -15,6 +15,7 @@ interface TypewriterTitleProps {
     startDelay?: number;
     autoLoop?: boolean;
     loopDelay?: number;
+    color?: string;
 }
 
 export default function TypewriterTitle({
@@ -27,6 +28,7 @@ export default function TypewriterTitle({
     startDelay = 500,
     autoLoop = true,
     loopDelay = 2000,
+    color = "white",
 }: TypewriterTitleProps) {
     const [scope, animate] = useAnimate();
 
@@ -119,20 +121,22 @@ export default function TypewriterTitle({
                 ref={scope}
             >
                 <motion.div
-                    className="text-white flex items-center justify-center"
+                    className="flex items-center justify-center"
                     style={{
                         fontFamily: 'SupremeLL-Bold, sans-serif',
                         fontSize: 'clamp(6.5rem, 23vw, 33rem)',
                         fontWeight: 400,
                         lineHeight: 1,
-                        letterSpacing: '-0.02em'
+                        letterSpacing: '-0.02em',
+                        color: color
                     }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                 >
                     <span
                         data-typewriter
-                        className="inline-block border-r-4 border-white animate-cursor pr-2"
+                        className="inline-block border-r-4 animate-cursor pr-2"
+                        style={{ borderColor: color }}
                     >
                         {sequences[0].text}
                     </span>

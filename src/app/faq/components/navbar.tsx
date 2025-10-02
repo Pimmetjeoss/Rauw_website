@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -118,7 +117,6 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const containerRef = useRef<HTMLElement>(null);
-    const router = useRouter();
 
     useEffect(() => {
       const checkWidth = () => {
@@ -140,13 +138,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     }, []);
 
     useEffect(() => {
-      const handleScroll = () => {
-        // Navbar wordt zichtbaar na 200px scrollen
-        setIsVisible(window.scrollY > 200);
-      };
-
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+      // Navbar is altijd zichtbaar op FAQ pagina
+      setIsVisible(true);
     }, []);
 
     const combinedRef = React.useCallback((node: HTMLElement | null) => {
@@ -165,8 +158,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
         onMouseLeave={() => setIsNavbarHovered(false)}
         className={cn(
           'sticky top-0 z-[100] w-full px-4 md:px-6 transition-all duration-300',
-          isVisible ? 'backdrop-blur border-b' : '',
-          isVisible && isNavbarHovered ? 'bg-white border-black' : isVisible ? 'bg-black border-white/80' : '',
+          'backdrop-blur border-b',
+          isNavbarHovered ? 'bg-black border-black' : 'bg-white border-black',
           className
         )}
         {...props}
@@ -181,7 +174,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
             )}
           >
             <Image
-              src={isNavbarHovered ? "/Rauw_logo_witzwart.png" : "/Rauw_logo.jpg"}
+              src={isNavbarHovered ? "/Rauw_logo.jpg" : "/Rauw_logo_witzwart.png"}
               alt="Rauw Collectief"
               width={180}
               height={90}
@@ -240,9 +233,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                           className={cn(
                             "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
                             isNavbarHovered
-                              ? "text-black hover:text-black/70"
-                              : "text-white/80 hover:bg-white hover:text-black",
-                            link.active && !isNavbarHovered && "text-white"
+                              ? "text-white/80 hover:bg-black hover:text-white"
+                              : "text-black hover:text-black/70",
+                            link.active && isNavbarHovered && "text-white"
                           )}
                         >
                           {link.label}
@@ -255,9 +248,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                             className={cn(
                               "inline-flex h-9 w-max items-center justify-center rounded-md px-2 py-2 text-sm font-medium transition-colors cursor-pointer bg-transparent",
                               isNavbarHovered
-                                ? "text-black hover:text-black/70"
-                                : "text-white/80 hover:bg-white hover:text-black",
-                              link.active && !isNavbarHovered && "text-white"
+                                ? "text-white/80 hover:bg-black hover:text-white"
+                                : "text-black hover:text-black/70",
+                              link.active && isNavbarHovered && "text-white"
                             )}
                           >
                             {link.label}
@@ -286,7 +279,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                           <div
                             className={cn(
                               "fixed left-0 right-0 top-[64px] shadow-xl z-50 border-t",
-                              isNavbarHovered ? "bg-white text-black border-black" : "bg-black text-white border-white/80"
+                              isNavbarHovered ? "bg-black text-white border-white/80" : "bg-white text-black border-black"
                             )}
                             style={{
                               width: '100vw',
@@ -298,12 +291,12 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                 // Leren menu - zonder submenu
                                 <>
                                   {/* Verticale lijn */}
-                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-black" : "bg-white")} />
+                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-white" : "bg-black")} />
 
                                   {/* Links van de streep */}
                                   <div className="absolute left-8 bottom-8">
                                     <h4 className="text-sm font-semibold mb-2">Over Rauw Collectief</h4>
-                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Ons verhaal</a>
+                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Ons verhaal</a>
                                   </div>
 
                                   {/* Rechts van de streep - zonder hover submenu */}
@@ -315,7 +308,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             href="#"
                                             className={cn(
                                               "transition-opacity duration-200 hover:underline",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             Over ons
@@ -326,7 +319,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             href="#"
                                             className={cn(
                                               "transition-opacity duration-200 hover:underline",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             Tafel ontwerpen
@@ -337,25 +330,22 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             href="#"
                                             className={cn(
                                               "transition-opacity duration-200 hover:underline",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             Review
                                           </a>
                                         </li>
                                         <li>
-                                          <button
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              router.push('/faq');
-                                            }}
+                                          <a
+                                            href="#"
                                             className={cn(
-                                              "transition-opacity duration-200 hover:underline cursor-pointer",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              "transition-opacity duration-200 hover:underline",
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                           >
                                             FAQ
-                                          </button>
+                                          </a>
                                         </li>
                                       </ul>
                                     </div>
@@ -365,12 +355,12 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                 // Producten en Contact menu
                                 <>
                                   {/* Verticale lijn */}
-                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-black" : "bg-white")} />
+                                  <div className={cn("absolute left-[20%] top-4 bottom-4 w-[1px]", isNavbarHovered ? "bg-white" : "bg-black")} />
 
                                   {/* Links van de streep */}
                                   <div className="absolute left-8 bottom-8">
                                     <h4 className="text-sm font-semibold mb-2">Clearance & Ready-to-Ship</h4>
-                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Custom Inquiries</a>
+                                    <a href="#" className={cn("text-sm", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Custom Inquiries</a>
                                   </div>
 
                                   {/* Rechts van de streep */}
@@ -387,7 +377,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                               "transition-opacity duration-200",
                                               hoveredItem === 'Bladen' && "underline",
                                               hoveredItem && hoveredItem !== 'Bladen' ? "opacity-30" : "",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                             onMouseEnter={() => setHoveredItem('Bladen')}
                                           >
@@ -401,7 +391,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                               "transition-opacity duration-200",
                                               hoveredItem === 'Onderstel' && "underline",
                                               hoveredItem && hoveredItem !== 'Onderstel' ? "opacity-30" : "",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                             onMouseEnter={() => setHoveredItem('Onderstel')}
                                           >
@@ -415,7 +405,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                               "transition-opacity duration-200",
                                               hoveredItem === 'Meubels' && "underline",
                                               hoveredItem && hoveredItem !== 'Meubels' ? "opacity-30" : "",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                             onMouseEnter={() => setHoveredItem('Meubels')}
                                           >
@@ -429,7 +419,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                               "transition-opacity duration-200",
                                               hoveredItem === 'Diversen' && "underline",
                                               hoveredItem && hoveredItem !== 'Diversen' ? "opacity-30" : "",
-                                              isNavbarHovered ? "text-black" : "text-white"
+                                              isNavbarHovered ? "text-white" : "text-black"
                                             )}
                                             onMouseEnter={() => setHoveredItem('Diversen')}
                                           >
@@ -442,15 +432,15 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                     {/* Verticale streep en submenu */}
                                     {hoveredItem && (
                                       <div className="flex gap-8 pl-8">
-                                        <div className={cn("w-[1px] h-full", isNavbarHovered ? "bg-black" : "bg-white")} />
+                                        <div className={cn("w-[1px] h-full", isNavbarHovered ? "bg-white" : "bg-black")} />
                                         <div>
                                           {hoveredItem === 'Bladen' && (
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Onze bladen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Eiken bladen</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Notenhouten bladen</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Betonnen bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Eiken bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Notenhouten bladen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Betonnen bladen</a></li>
                                               </ul>
                                             </>
                                           )}
@@ -458,9 +448,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Toffe onderstellen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stalen onderstel</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Houten onderstel</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Custom onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Stalen onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Houten onderstel</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Custom onderstel</a></li>
                                               </ul>
                                             </>
                                           )}
@@ -468,9 +458,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Kekke meubels</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Tafels</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Kasten</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Stoelen</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Tafels</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Kasten</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Stoelen</a></li>
                                               </ul>
                                             </>
                                           )}
@@ -478,9 +468,9 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                             <>
                                               <h3 className={cn("font-bold mb-4 text-base", isNavbarHovered ? "text-black" : "text-white")}>Diverse Diversen</h3>
                                               <ul className="space-y-2 text-sm">
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Accessoires</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Verlichting</a></li>
-                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white")}>Decoratie</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Accessoires</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Verlichting</a></li>
+                                                <li><a href="#" className={cn("hover:underline", isNavbarHovered ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")}>Decoratie</a></li>
                                               </ul>
                                             </>
                                           )}
@@ -510,8 +500,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
               className={cn(
                 "text-sm font-medium transition-colors",
                 isNavbarHovered
-                  ? "text-black hover:bg-black/10"
-                  : "text-white hover:bg-white/10"
+                  ? "text-white hover:bg-white/10"
+                  : "text-black hover:bg-black/10"
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -525,8 +515,8 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
               className={cn(
                 "text-sm font-medium px-4 h-9 rounded-md shadow-sm transition-colors",
                 isNavbarHovered
-                  ? "bg-black text-white hover:bg-black/90"
-                  : "bg-white text-black hover:bg-white/90"
+                  ? "bg-white text-black hover:bg-white/90"
+                  : "bg-black text-white hover:bg-black/90"
               )}
               onClick={(e) => {
                 e.preventDefault();

@@ -3,7 +3,7 @@ import TypewriterTitle from "@/components/TypewriterTitle";
 import { Navbar } from "@/components/Navbar";
 import ScrollText from "@/components/ScrollText";
 import { PixelImage } from "@/components/PixelImage";
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -78,7 +78,7 @@ export default function Home() {
         <div className="absolute top-[1050px] w-full h-[1px] bg-white opacity-80"></div>
 
         {/* Over Rauw Collectief sectie */}
-        <div className="absolute top-[1070px] left-0 w-full flex justify-between items-start bg-black px-8">
+        <div className="absolute top-[1070px] left-0 w-full flex justify-between items-start bg-black pr-8">
           <div>
             <ScrollText
               texts={[
@@ -108,53 +108,10 @@ export default function Home() {
           />
         </div>
 
-        {/* Witte streep onder video - start nieuwe sectie */}
-        <div className="absolute top-[2300px] w-full h-[1px] bg-white opacity-80"></div>
-
-        {/* Ontwerp sectie met links "Ontwerp je eigen tafel" en rechts "Submit" */}
-        <div className="absolute top-[2220px] w-full flex justify-between items-end">
-          <div className="pl-4">
-            <ScrollText
-              texts={["Ontwerp je eigen tafel"]}
-              className="max-w-none"
-            />
-          </div>
-          <div className="pr-4">
-            <ScrollText
-              texts={["Submit"]}
-              className="max-w-none [&_div]:text-gray-400"
-            />
-          </div>
-        </div>
-
         {/* Footer */}
-        <footer className="absolute top-[2420px] w-full py-2 bg-black">
-          <div className="flex justify-between items-end">
-            <div className="text-white pl-8 flex flex-col gap-2">
-              <div className="flex gap-3">
-                <a href="https://www.linkedin.com/in/rick-de-voogt-29413728/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                  <Linkedin className="h-6 w-6 text-white" />
-                </a>
-                <a href="https://www.facebook.com/RauwCollectief/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                  <Facebook className="h-6 w-6 text-white" />
-                </a>
-                <a href="https://www.instagram.com/rauwcollectief/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                  <Instagram className="h-6 w-6 text-white" />
-                </a>
-              </div>
-              <p className="text-sm opacity-80">© 2025 Rauw Collectief. All rights reserved.</p>
-            </div>
-            <div className="pr-2">
-              <Image
-                src="/Rauw_logo.jpg"
-                alt="Rauw Collectief"
-                width={180}
-                height={90}
-                className="h-16 w-auto"
-              />
-            </div>
-          </div>
-        </footer>
+        <div className="absolute top-[2300px] w-full">
+          <Footer />
+        </div>
       </div>
     </div>
   );
