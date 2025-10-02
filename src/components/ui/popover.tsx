@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 const PopoverContext = React.createContext<{
   open: boolean
-  setOpen: (open: boolean) => void
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }>({ open: false, setOpen: () => {} })
 
 const Popover = ({ children }: { children: React.ReactNode }) => {
