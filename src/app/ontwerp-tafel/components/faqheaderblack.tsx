@@ -19,7 +19,7 @@ export default function FAQHeader() {
           fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
           lineHeight: 1.4
         }}>
-          Creëer uw droomtafel door zelf een blad, onderstel en vorm te kiezen die perfect bij uw wensen passen. Upload desgewenst een foto van uw woon- of eetkamer en visualiseer binnen enkele seconden uw persoonlijke ontwerp in uw eigen ruimte, voor een tafel die jarenlang karakter en kwaliteit biedt.
+          Creëer uw droomtafel door zelf een blad, kleur en onderstel te kiezen die perfect bij uw wensen passen. Upload desgewenst een foto van uw woon- of eetkamer en visualiseer binnen enkele seconden uw persoonlijke ontwerp in uw eigen ruimte, voor een tafel die jarenlang karakter en kwaliteit biedt.
         </p>
       </div>
 

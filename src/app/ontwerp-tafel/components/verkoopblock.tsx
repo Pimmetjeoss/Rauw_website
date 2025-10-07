@@ -137,44 +137,57 @@ export const PixelImage = ({
 };
 
 interface VerkoopBlockProps {
-  images: string[];
+  images?: string[];
 }
 
 export const VerkoopBlock = ({ images }: VerkoopBlockProps) => {
-  // Ensure we have exactly 6 images, fill with placeholder if needed
-  const displayImages = [...images];
-  while (displayImages.length < 6) {
-    displayImages.push('/tafels.png');
-  }
+  const steps = [
+    { text: "Kies je tafelblad", image: "/tafelblad.jpeg" },
+    { text: "Kies je kleur", image: "/Kleur.webp" },
+    { text: "Kies je onderstel", image: "/onderstel.webp" },
+    { text: "Upload foto van je woon-/eetkamer (optioneel)", image: "/tafels.png" }
+  ];
 
   return (
     <div className="w-full">
-      {/* Top row - 3 images */}
+      {/* Top row - 3 steps */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
-        {displayImages.slice(0, 3).map((img, index) => (
-          <div key={`top-${index}`} className="flex justify-center">
+        {steps.slice(0, 3).map((step, index) => (
+          <div key={`top-${index}`} className="flex justify-center items-center relative">
             <PixelImage
-              src={img}
+              src={step.image}
               grid="8x8"
               grayscaleAnimation={true}
               showReplayButton={false}
             />
+            <div className="absolute inset-0 flex items-start justify-center pt-8 pointer-events-none">
+              <div className="bg-black/50 backdrop-blur-lg rounded-xl px-6 py-3 border-2 border-white/50 shadow-xl">
+                <p className="text-2xl md:text-3xl font-semibold text-center text-white tracking-wide">
+                  {step.text}
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Bottom row - 3 images */}
+      {/* Bottom row - 1 step on the left */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-        {displayImages.slice(3, 6).map((img, index) => (
-          <div key={`bottom-${index}`} className="flex justify-center">
-            <PixelImage
-              src={img}
-              grid="8x8"
-              grayscaleAnimation={true}
-              showReplayButton={false}
-            />
+        <div className="flex justify-center items-center relative">
+          <PixelImage
+            src={steps[3].image}
+            grid="8x8"
+            grayscaleAnimation={true}
+            showReplayButton={false}
+          />
+          <div className="absolute inset-0 flex items-start justify-center pt-8 pointer-events-none">
+            <div className="bg-black/50 backdrop-blur-lg rounded-xl px-6 py-3 border-2 border-white/50 shadow-xl">
+              <p className="text-2xl md:text-3xl font-semibold text-center text-white tracking-wide">
+                {steps[3].text}
+              </p>
+            </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

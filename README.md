@@ -6,12 +6,13 @@ Een moderne Next.js website voor Rauw Collectief - handgemaakte meubels en tafel
 
 - **Homepage** met typewriter effect en pixelated afbeeldingen
 - **Over Ons** pagina met teamleden en bedrijfsinformatie
+- **Ontwerp Tafel** pagina met interactieve tafelconfigurator
 - **Tafels** pagina met productoverzicht
 - **FAQ** pagina met veelgestelde vragen
 - **Contact** pagina met formulier en openingstijden
 - Responsive navbar met mega-menu
 - Smooth page transitions
-- Custom componenten (TypewriterTitle, PixelImage, ScrollText)
+- Custom componenten (TypewriterTitle, PixelImage, ScrollText, VerkoopBlock)
 
 ## 🛠️ Tech Stack
 
@@ -45,6 +46,7 @@ src/
 │   ├── contact/          # Contact pagina
 │   ├── faq/              # FAQ pagina
 │   ├── over-ons/         # Over Ons pagina
+│   ├── ontwerp-tafel/    # Ontwerp Tafel configurator
 │   ├── tafels/           # Tafels pagina
 │   └── page.tsx          # Homepage
 ├── components/
@@ -61,23 +63,27 @@ src/
 
 - **Navbar** - Sticky navigatiebalk met dropdown mega-menu
 - **TypewriterTitle** - Animated typewriter effect
-- **PixelImage** - Afbeeldingen met pixelated hover effect
+- **PixelImage** - Afbeeldingen met pixelated hover effect en grayscale animatie
+- **VerkoopBlock** - Interactieve blokken met backdrop blur en glasmorfisme
 - **ScrollText** - Grote scrollende tekst animatie
 - **PageTransition** - Smooth page transitions tussen routes
 
 ## 🔗 Navigatie Links
 
-Alle "Over ons" links in de website leiden naar `/over-ons`:
-- Navbar → Leren → Over ons
-- Homepage → Learn more →
-- Contact pagina → SideMenu → Over ons
+Belangrijke navigatie routes:
+- **Over ons** → `/over-ons` (Navbar → Leren → Over ons)
+- **Ontwerp Tafel** → `/ontwerp-tafel` (Navbar → Tafel ontwerpen)
+- **Contact** → `/contact`
+- **FAQ** → `/faq`
 
 ## 📝 Recent Updates
 
+- ✅ Ontwerp Tafel pagina toegevoegd met interactieve configurator
+- ✅ VerkoopBlock component met glasmorfisme styling
+- ✅ Navigatie naar /ontwerp-tafel in alle navbar componenten
+- ✅ Pixel animaties toegevoegd aan productblokken
 - ✅ Over ons pagina toegevoegd met teamleden
-- ✅ Alle "Over ons" links gekoppeld aan `/over-ons`
 - ✅ Navigation verbeteringen in alle navbar componenten
-- ✅ Contact pagina SideMenu gelinkt
 
 ## 🚢 Deployment
 
