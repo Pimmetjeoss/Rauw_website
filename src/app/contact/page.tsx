@@ -30,7 +30,7 @@ export default function ContactPage() {
               <SideMenu
                 items={[
                   { label: "Over ons", onClick: () => router.push('/over-ons') },
-                  { label: "Tafel ontwerpen" },
+                  { label: "Tafel ontwerpen", onClick: () => router.push('/ontwerp-tafel') },
                   { label: "Review" },
                   { label: "Contact", active: true },
                   { label: "FAQ" },

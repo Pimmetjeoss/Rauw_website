@@ -323,15 +323,18 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                                           </button>
                                         </li>
                                         <li>
-                                          <a
-                                            href="#"
+                                          <button
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              router.push('/ontwerp-tafel');
+                                            }}
                                             className={cn(
-                                              "transition-opacity duration-200 hover:underline",
+                                              "transition-opacity duration-200 hover:underline cursor-pointer",
                                               isNavbarHovered ? "text-black" : "text-white"
                                             )}
                                           >
                                             Tafel ontwerpen
-                                          </a>
+                                          </button>
                                         </li>
                                         <li>
                                           <a
